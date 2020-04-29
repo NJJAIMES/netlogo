@@ -1,0 +1,23 @@
+;Integrantes: Neftalí Jaimes, Cristian Correa
+
+turtles-own [tr] 
+
+to setup ; Configuración Inicial
+  clear-all
+  crt poblacion [setxy random-xcor random-ycor set color blue  set shape "person"] ;Asigna Pöblación
+  ask n-of (poblacion * (pinfec / 100)) turtles [set color red] ;Asigna porcentaje de infectados
+  reset-ticks
+end
+
+to t-inf ; tiempo de recuperación
+  ask turtles with [color = red] [ set tr tr + 1 ]
+end
+
+to go ; iteración
+  t-inf 
+  ask turtles [ right random 360 forward 1
+  if any? turtles with [color = red] in-radius radio [set color red] ] 
+  ask turtles [if tr = tiempoRecup [set color grey]]
+  tick
+end
+
